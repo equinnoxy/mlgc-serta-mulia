@@ -17,8 +17,8 @@ const InputError = require('../exceptions/InputError');
     });
 
     const model = await loadModel();
-    server.app.model = model
- 
+    server.app.model = model;
+
     server.route(routes);
 
     server.ext('onPreResponse', function (request, h) {
@@ -38,12 +38,13 @@ const InputError = require('../exceptions/InputError');
                 status: 'fail',
                 message: response.message
             })
-            newResponse.code(response.statusCode)
+            newResponse.code(response.output.statusCode)
             return newResponse;
         }
+
         return h.continue;
     });
- 
+
     await server.start();
     console.log(`Server start at: ${server.info.uri}`);
 })();
